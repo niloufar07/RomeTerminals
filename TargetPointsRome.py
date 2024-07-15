@@ -3,15 +3,12 @@ import pandas as pd
 import folium
 from geopy.geocoders import Nominatim
 from geopy.exc import GeocoderTimedOut
-from geopy.extra.rate_limiter import RateLimiter
-from streamlit_folium import st_folium
 import time
+from streamlit_folium import st_folium
 
 # Load the data
-health = pd.read_csv(r"C:\Users\Nilofar\Desktop\Rome\170424_Roma_PuntiInteresse.csv")
-
-# Filter the Rome dataset for BUS == 1
-rome = pd.read_csv(r"C:\Users\Nilofar\Desktop\Rome\okrome.csv")
+health = pd.read_csv("Data/170424_Roma_PuntiInteresse.csv")
+rome = pd.read_csv("Data/okrome.csv")
 rome = rome[rome['BUS'] == 1]
 
 # List of railway stations
@@ -51,10 +48,6 @@ for station in stations:
             station_coordinates[station] = coordinates
         else:
             st.error(f"Failed to get coordinates for {station}")
-
-# Print station coordinates
-for station, coordinates in station_coordinates.items():
-    print(f"{station}: {coordinates}")
 
 # Drop unnecessary columns from the health dataset
 columns_to_drop = ['country_code', 'country', 'state', 'city', 'original_Comune', 'original_Tipo Azienda',
@@ -100,6 +93,7 @@ points = {
 }
 
 # Find the nearest hospital for each point
+nearest_hospitals = {}
 for point_name, (point_lat, point_lon) in points.items():
     nearest_hospital = None
     min_distance = float('inf')
@@ -113,7 +107,7 @@ for point_name, (point_lat, point_lon) in points.items():
             min_distance = distance
             nearest_hospital = row['original_Denominazione Struttura/Stabilimento']
     
-    print(f"For {point_name}: Nearest hospital is {nearest_hospital} at a distance of {min_distance} km.")
+    nearest_hospitals[point_name] = (nearest_hospital, min_distance)
 
 # Initialize the map
 m = folium.Map(location=[41.895266, 12.482324], zoom_start=12)
@@ -147,4 +141,5 @@ for station_name, (station_lat, station_lon) in station_coordinates.items():
                     color="red", weight=2, opacity=0.5).add_to(m)
 
 # Display the map in Streamlit
-st_folium(m)
+st.title("Rome Railway Stations and Nearest Hospitals")
+st_folium(m, width=800, height=600)
