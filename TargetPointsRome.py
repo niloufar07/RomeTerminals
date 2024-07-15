@@ -5,6 +5,9 @@ from geopy.geocoders import Nominatim
 from geopy.exc import GeocoderTimedOut
 import time
 from streamlit_folium import st_folium
+# Example if aiohttp is directly needed in your script
+import aiohttp
+
 
 # Load the data
 health = pd.read_csv("Data/170424_Roma_PuntiInteresse.csv")
