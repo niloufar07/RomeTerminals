@@ -3,4 +3,5 @@ pandas
 geopy
 folium
 streamlit-folium
+aiohttp==3.8.1
 
