@@ -7,8 +7,8 @@ import time
 from streamlit_folium import st_folium
 
 # Load the data
-health = pd.read_csv("Data/170424_Roma_PuntiInteresse.csv")
-rome = pd.read_csv("Data/okrome.csv")
+health = pd.read_csv(r"https://raw.githubusercontent.com/niloufar07/RomeTerminals/main/170424_Roma_PuntiInteresse.csv")
+rome = pd.read_csv(r"https://raw.githubusercontent.com/niloufar07/RomeTerminals/main/okrome.csv")
 rome = rome[rome['BUS'] == 1]
 
 # List of railway stations
