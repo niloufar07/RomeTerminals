@@ -4,4 +4,6 @@ geopy
 folium
 streamlit-folium
 aiohttp==3.8.1
+streamlit_folium==0.5.0
+
 
