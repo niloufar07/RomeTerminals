@@ -30,7 +30,8 @@ geolocator = Nominatim(user_agent="rome_stations")
 
 # Cache for station coordinates
 station_coordinates = {}
-
+# Initialize a dictionary to cache geocoding results
+geocode_cache = {}
 # Function to get coordinates with retry mechanism
 def get_coordinates(station):
     retries = 3
